@@ -1,0 +1,35 @@
+# 《Her》风格AI助手 - Python 依赖
+
+# 核心框架
+pipecat-ai[whisper,silero,local-smart-turn,ollama,piper,webrtc,runner]>=0.0.77
+
+# 机器学习和AI
+torch>=2.0.0
+transformers>=4.30.0
+onnxruntime>=1.15.0
+
+# 音频处理
+pyaudio>=0.2.11
+soundfile>=0.12.1
+resampy>=0.4.2
+
+# 网络和API
+requests>=2.31.0
+aiohttp>=3.8.0
+websockets>=11.0.0
+
+# 工具和配置
+python-dotenv>=1.0.0
+loguru>=0.7.0
+psutil>=5.9.0
+
+# 可选依赖（用于特定功能）
+# 如果使用 Apple Silicon
+# coremltools>=7.0
+
+# 如果使用 NVIDIA GPU
+# nvidia-ml-py>=12.0.0
+
+# 如果需要额外的音频格式支持
+# librosa>=0.10.0
+# scipy>=1.10.0
