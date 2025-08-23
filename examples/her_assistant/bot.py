@@ -126,7 +126,7 @@ except ImportError as e:
 
 # 加载 Ollama LLM
 try:
-    from pipecat.services.ollama.llm import OllamaLLMService
+    from pipecat.services.ollama.llm import OLLamaLLMService
 
     OLLAMA_AVAILABLE = True
     logger.info("✅ Ollama LLM 服务可用")
@@ -201,24 +201,21 @@ class HerAssistantServices:
         logger.info("🔄 初始化 Smart Turn v2...")
 
         model_path = os.getenv("LOCAL_SMART_TURN_MODEL_PATH", "")
-        device = os.getenv("SMART_TURN_DEVICE", "auto")
+        logger.info(f"🔍 原始模型路径: '{model_path}'")
 
-        # 自动选择设备
-        if device == "auto":
-            if torch.cuda.is_available():
-                device = "cuda"
-            elif torch.backends.mps.is_available():
-                device = "mps"
-            else:
-                device = "cpu"
+        # 如果模型路径为空，使用默认的 HuggingFace 模型
+        if not model_path.strip():
+            model_path = "pipecat-ai/smart-turn-v2"
+            logger.info(f"🔄 使用默认模型路径: '{model_path}'")
+
+        logger.info(f"🎯 最终模型路径: '{model_path}'")
 
         self.turn_analyzer = LocalSmartTurnAnalyzerV2(
             smart_turn_model_path=model_path,
             params=SmartTurnParams(stop_secs=3.0, pre_speech_ms=100, max_duration_secs=8),
-            device=device,
         )
 
-        logger.info(f"✅ Smart Turn v2 配置: 设备={device}")
+        logger.info("✅ Smart Turn v2 配置完成（设备自动选择）")
         return self.turn_analyzer
 
     def create_stt_service(self):
@@ -282,7 +279,7 @@ class HerAssistantServices:
             logger.error("请确保 Ollama 服务正在运行: ollama serve")
             raise
 
-        self.llm = OllamaLLMService(base_url=base_url, model=model)
+        self.llm = OLLamaLLMService(base_url=base_url, model=model)
 
         logger.info(f"✅ Ollama LLM 配置: URL={base_url}, 模型={model}")
         return self.llm
