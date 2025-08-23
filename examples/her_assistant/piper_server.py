@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 # 配置
 PIPER_MODEL_DIR = "./models"
-DEFAULT_VOICE = "en_US-lessac-medium"
+DEFAULT_VOICE = "zh_CN-huayan-medium"
 
 
 def get_model_path(voice_name):
