@@ -257,14 +257,16 @@ class HerAssistantServices:
 
         logger.info("🧠 初始化 Ollama LLM...")
 
-        base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+        base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
         model = os.getenv("OLLAMA_MODEL", "gemma3:4b")
 
         # 验证 Ollama 服务是否可用
         try:
             import requests
 
-            response = requests.get(f"{base_url}/api/tags", timeout=5)
+            # 对于健康检查，需要使用原始 Ollama API（不带 /v1）
+            check_url = base_url.replace("/v1", "") if base_url.endswith("/v1") else base_url
+            response = requests.get(f"{check_url}/api/tags", timeout=5)
             if response.status_code != 200:
                 raise ConnectionError(f"Ollama 服务连接失败: {response.status_code}")
 
@@ -458,7 +460,12 @@ def check_prerequisites():
     try:
         import requests
 
-        ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+        # 获取 Ollama 基础 URL，如果配置了 /v1 端点，需要去掉它用于健康检查
+        ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+        if ollama_base_url.endswith("/v1"):
+            ollama_url = ollama_base_url[:-3]  # 去掉 /v1
+        else:
+            ollama_url = ollama_base_url
         response = requests.get(f"{ollama_url}/api/tags", timeout=5)
         if response.status_code == 200:
             logger.info("✅ Ollama 服务运行正常")
