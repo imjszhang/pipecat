@@ -11,7 +11,7 @@
 - Whisper Large v3 Turbo - 本地语音转文本
 - Smart Turn v2 - 智能轮换检测
 - Ollama + Gemma 3 4B - 本地大语言模型
-- Kokoro TTS / Piper TTS - 本地文本转语音
+- Piper TTS - 本地文本转语音
 
 特点：
 - 完全本地化，无需外部API
@@ -23,7 +23,7 @@
 1. 启动 Ollama 服务: ollama serve
 2. 拉取模型: ollama pull gemma3:4b
 3. 配置 .env 文件
-4. （可选）启动 Kokoro TTS 服务
+4. 启动 Piper TTS 服务
 
 运行命令：
     python bot.py
@@ -294,7 +294,10 @@ class HerAssistantServices:
             voice = os.getenv("PIPER_VOICE", "en_US-lessac-medium")
 
             try:
-                self.tts = PiperTTSService(base_url=base_url, voice=voice)
+                import aiohttp
+
+                session = aiohttp.ClientSession()
+                self.tts = PiperTTSService(base_url=base_url, voice=voice, aiohttp_session=session)
                 logger.info(f"✅ Piper TTS 配置: URL={base_url}, 声音={voice}")
                 return self.tts
             except Exception as e:

@@ -207,7 +207,7 @@ main() {
     
     # 检查 TTS 服务（可选）
     piper_url=${PIPER_BASE_URL:-"http://localhost:8001"}
-    kokoro_url=${KOKORO_BASE_URL:-"http://localhost:8000"}
+    # Kokoro TTS 已被 Piper TTS 替代
     
     tts_available=false
     
@@ -223,11 +223,7 @@ main() {
         fi
     fi
     
-    # 检查 Kokoro TTS
-    if ! $tts_available && curl -s "$kokoro_url/health" >/dev/null 2>&1; then
-        print_success "Kokoro TTS 服务已运行"
-        tts_available=true
-    fi
+    # Kokoro TTS 已被 Piper TTS 替代，不再检查
     
     # 检查备用 Google TTS
     if ! $tts_available && [[ -n "${GOOGLE_API_KEY:-}" ]]; then

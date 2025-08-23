@@ -17,7 +17,7 @@
 - **Whisper Large v3 Turbo** - 语音转文本（本地）
 - **Smart Turn v2** - 智能轮换检测（本地）
 - **Ollama + Gemma 3 4B** - 大语言模型（本地）
-- **Kokoro TTS / Piper TTS** - 文本转语音（本地）
+- **Piper TTS** - 文本转语音（本地）
 
 ### 数据流程
 ```
@@ -67,18 +67,13 @@ pip install piper-tts
 python -m piper.http_server --host 0.0.0.0 --port 8001
 ```
 
-#### 或启动 Kokoro TTS（可选）
+#### Piper TTS 安装说明
 ```bash
-# 克隆 Kokoro TTS
-git clone https://github.com/hexgrad/kokoro
-cd kokoro
+# 如果 Piper TTS 未安装，可通过以下方式安装：
+pip install piper-tts
 
-# 安装依赖
-pip install torch torchaudio numpy scipy
-pip install -r requirements.txt
-
-# 启动服务
-python serve.py --host 0.0.0.0 --port 8000 &
+# 或下载预编译版本（推荐）
+# 访问: https://github.com/rhasspy/piper/releases
 ```
 
 ### 3. 配置环境
@@ -279,7 +274,7 @@ ENABLE_EMOTION_DETECTION=true
 ### 相关项目
 - **Ollama**: [ollama.ai](https://ollama.ai)
 - **Whisper**: [openai.com/whisper](https://openai.com/whisper)
-- **Kokoro TTS**: [github.com/hexgrad/kokoro](https://github.com/hexgrad/kokoro)
+- **Piper TTS**: [github.com/rhasspy/piper](https://github.com/rhasspy/piper)
 
 ## 📄 许可证
 

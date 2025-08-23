@@ -188,15 +188,7 @@ class SystemVerifier:
         except:
             print_warning(f"Piper TTS 服务未运行: {piper_url}")
 
-        # 检查 Kokoro TTS
-        kokoro_url = os.getenv("KOKORO_BASE_URL", "http://localhost:8000")
-        try:
-            response = requests.get(f"{kokoro_url}/health", timeout=3)
-            if response.status_code == 200:
-                print_success(f"Kokoro TTS 服务运行正常: {kokoro_url} ✓")
-                tts_available = True
-        except:
-            print_warning(f"Kokoro TTS 服务未运行: {kokoro_url}")
+        # Kokoro TTS 已被 Piper TTS 替代，不再检查
 
         # 检查 Google TTS API
         google_api_key = os.getenv("GOOGLE_API_KEY")
@@ -207,9 +199,7 @@ class SystemVerifier:
             print_warning("Google TTS API 密钥未配置")
 
         if not tts_available:
-            self.issues.append(
-                "没有可用的 TTS 服务，请启动 Piper TTS、Kokoro TTS 或配置 Google TTS"
-            )
+            self.issues.append("没有可用的 TTS 服务，请启动 Piper TTS 或配置 Google TTS")
             return False
 
         return True
