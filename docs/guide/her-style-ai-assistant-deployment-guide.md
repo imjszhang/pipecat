@@ -12,7 +12,7 @@
 - **Whisper Large v3 Turbo** - 语音转文本
 - **Smart Turn v2** - 智能轮换检测  
 - **Kokoro TTS** - 文本转语音（或 Google TTS 替代）
-- **Gemma 3 12B** - 大语言模型（或 Gemini 2.0 Flash）
+- **Gemma 3 4B** - 大语言模型（或 Gemini 2.0 Flash）
 
 ### 🔧 系统要求
 
@@ -235,7 +235,7 @@ pip install -r requirements.txt
 python serve.py --host 0.0.0.0 --port 8000
 ```
 
-### 5. Gemma 3 12B（大语言模型）
+### 5. Gemma 3 4B（大语言模型）
 
 #### 方案A：使用 Gemini 2.0 Flash（推荐）
 
@@ -264,7 +264,7 @@ curl -fsSL https://ollama.ai/install.sh | sh
 ollama serve
 
 # 拉取模型
-ollama pull gemma2:12b
+ollama pull gemma3:4b
 ```
 
 ```python
@@ -272,7 +272,7 @@ from pipecat.services.ollama import OllamaLLMService
 
 llm = OllamaLLMService(
     base_url="http://localhost:11434",
-    model="gemma2:12b"
+    model="gemma3:4b"
 )
 ```
 
@@ -974,7 +974,7 @@ curl -fsSL https://ollama.ai/install.sh | sh
 ollama serve &
 
 # 3. 拉取 Gemma 模型
-ollama pull gemma2:12b
+ollama pull gemma3:4b
 
 # 4. 安装本地 TTS
 # 部署 Kokoro TTS 或使用 Piper
